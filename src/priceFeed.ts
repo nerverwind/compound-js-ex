@@ -3,16 +3,16 @@ import * as eth from './eth';
 import { netId } from './helpers';
 import { constants as _constants, address as _address, abi, cTokens as _cTokens, underlyings as _underlyings, decimals as _decimals, opfAssets as _opfAssets } from './constantsMultiPlatform';
 
-function validateAsset(asset: string, argument: string, errorPrefix: string, platform: string) {
+function validateAsset(asset: string, argument: string, errorPrefix: string, pool: string) {
   if (typeof asset !== 'string' || asset.length < 1) {
     throw Error(errorPrefix + 'Argument `' + argument + '` must be a non-empty string.');
   }
 
-  const address = _address[platform];  
-  const underlyings = _underlyings[platform];
-  const decimals = _decimals[platform];
-  const cTokens = _cTokens[platform];  
-  const opfAssets = _opfAssets[platform];
+  const address = _address[pool];  
+  const underlyings = _underlyings[pool];
+  const decimals = _decimals[pool];
+  const cTokens = _cTokens[pool];  
+  const opfAssets = _opfAssets[pool];
 
   const assetIsCToken = asset[0] === 'c';
 
@@ -37,9 +37,9 @@ function validateAsset(asset: string, argument: string, errorPrefix: string, pla
   return [assetIsCToken, cTokenName, cTokenAddress, underlyingName, underlyingAddress, underlyingDecimals];
 }
 
-async function cTokenExchangeRate(cTokenAddress, cTokenName, underlyingDecimals, platform) {
+async function cTokenExchangeRate(cTokenAddress, cTokenName, underlyingDecimals, pool) {
 
-  const constants = _constants[platform];
+  const constants = _constants[pool];
 
   const address = cTokenAddress;
   const method = 'exchangeRateCurrent';
@@ -67,10 +67,10 @@ async function cTokenExchangeRate(cTokenAddress, cTokenName, underlyingDecimals,
  * @returns {string} Returns a string of the numerical value of the asset.
  */
 
-export async function getPrice(asset: string, inAsset: string, platform: string) { //inAsset = constants.USDT;
+export async function getPrice(asset: string, inAsset: string, pool: string) { //inAsset = constants.USDT;
   
-  const address = _address[platform];  
-  const constants = _constants[platform];
+  const address = _address[pool];  
+  const constants = _constants[pool];
 
   inAsset = !inAsset ? constants.USDT : inAsset;
 

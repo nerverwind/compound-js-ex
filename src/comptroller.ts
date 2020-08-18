@@ -12,7 +12,7 @@ import { constants as _constants, address as _address, abi, cTokens as _cTokens 
  * @returns {object} Returns an Ethers.js transaction object of the enterMarkets
  *     transaction.
  */
-export async function enterMarkets(markets: any = [], platform: string = 'compound') {
+export async function enterMarkets(markets: any = [], pool: string = 'compound') {
   await netId(this);
   const errorPrefix = 'Compound [enterMarkets] | ';
 
@@ -25,8 +25,8 @@ export async function enterMarkets(markets: any = [], platform: string = 'compou
   }
 
   const addresses = [];
-  const cTokens = _cTokens[platform];
-  const address = _address[platform];
+  const cTokens = _cTokens[pool];
+  const address = _address[pool];
   for (let i = 0; i < markets.length; i++) {
     if (markets[i][0] !== 'c') {
       markets[i] = 'c' + markets[i];
@@ -57,7 +57,7 @@ export async function enterMarkets(markets: any = [], platform: string = 'compou
  * @returns {object} Returns an Ethers.js transaction object of the exitMarket
  *     transaction.
  */
-export async function exitMarket(market: string, platform: string = 'compound') {
+export async function exitMarket(market: string, pool: string = 'compound') {
   await netId(this);
   const errorPrefix = 'Compound [exitMarkets] | ';
 
@@ -69,8 +69,8 @@ export async function exitMarket(market: string, platform: string = 'compound') 
     market = 'c' + market;
   }
 
-  const cTokens = _cTokens[platform];
-  const address = _address[platform];
+  const cTokens = _cTokens[pool];
+  const address = _address[pool];
 
   if (!cTokens.includes(market)) {
     throw Error(errorPrefix + 'Provided market `' + market + '` is not a recognized cToken.');

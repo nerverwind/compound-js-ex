@@ -19,18 +19,11 @@ ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
  * @returns {object} Returns an instance of Compound.js SDK.
  * 
  */
-const Compound = function(provider: any='mainnet', options: any={}, platform: string = 'compound') {
+const Compound = function(provider: any='mainnet', options: any={}, pool: string = 'compound') {
   options.provider = provider || options.provider;
   provider = eth.createProvider(options);
 
-  console.log('platform', platform);
-
-  const decimals = _decimals[platform];
-  Compound.decimals = decimals;  
-
-  const constants = _constants[platform];
-  console.log('constants', constants);
-  Object.assign(Compound, constants);  
+  Compound.setPool(pool);
 
   const instance: any = {
     _provider: provider,
@@ -53,5 +46,16 @@ Compound.eth = eth;
 Compound.util = util;
 Compound._ethers = ethers;
 Compound.decimals = {};
+
+Compound.setPool = function(pool: string) {
+  console.log('platform', pool);
+
+  const decimals = _decimals[pool];
+  Compound.decimals = decimals;  
+  const constants = _constants[pool];
+  console.log('constants', constants);
+  Object.assign(Compound, constants);  
+  
+}
 
 export default Compound;

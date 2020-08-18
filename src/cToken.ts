@@ -17,14 +17,14 @@ import { constants as _constants, address as _address, abi, decimals as _decimal
  * @returns {object} Returns an Ethers.js transaction object of the supply
  *     transaction.
  */
-export async function supply(asset: string, amount: any, platform: string, options: any = {}) {
+export async function supply(asset: string, amount: any, pool: string, options: any = {}) {
   await netId(this);
   const errorPrefix = 'Compound [supply] | ';
 
-  const address = _address[platform];  
-  const underlyings = _underlyings[platform];
-  const decimals = _decimals[platform];
-  const constants = _constants[platform];
+  const address = _address[pool];  
+  const underlyings = _underlyings[pool];
+  const decimals = _decimals[pool];
+  const constants = _constants[pool];
 
   console.log('address', address);
   console.log('underlyings', underlyings);
@@ -81,7 +81,7 @@ export async function supply(asset: string, amount: any, platform: string, optio
  * @returns {object} Returns an Ethers.js transaction object of the redeem
  *     transaction.
  */
-export async function redeem(asset: string, amount: any, platform: string, options: any = {}) {
+export async function redeem(asset: string, amount: any, pool: string, options: any = {}) {
   await netId(this);
   const errorPrefix = 'Compound [redeem] | ';
 
@@ -89,11 +89,11 @@ export async function redeem(asset: string, amount: any, platform: string, optio
     throw Error(errorPrefix + 'Argument `asset` must be a non-empty string.');
   }
 
-  const address = _address[platform];  
-  const underlyings = _underlyings[platform];
-  const decimals = _decimals[platform];
-  const constants = _constants[platform];  
-  const cTokens = _cTokens[platform];
+  const address = _address[pool];  
+  const underlyings = _underlyings[pool];
+  const decimals = _decimals[pool];
+  const constants = _constants[pool];  
+  const cTokens = _cTokens[pool];
 
   const assetIsCToken = asset[0] === 'c';
 
@@ -149,14 +149,14 @@ export async function redeem(asset: string, amount: any, platform: string, optio
  * @returns {object} Returns an Ethers.js transaction object of the borrow
  *     transaction.
  */
-export async function borrow(asset: string, amount: any, platform: string, options: any = {}) {
+export async function borrow(asset: string, amount: any, pool: string, options: any = {}) {
   await netId(this);
   const errorPrefix = 'Compound [borrow] | ';
 
-  const address = _address[platform];  
-  const underlyings = _underlyings[platform];
-  const decimals = _decimals[platform];
-  const constants = _constants[platform];    
+  const address = _address[pool];  
+  const underlyings = _underlyings[pool];
+  const decimals = _decimals[pool];
+  const constants = _constants[pool];    
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];
@@ -206,14 +206,14 @@ export async function borrow(asset: string, amount: any, platform: string, optio
  * @returns {object} Returns an Ethers.js transaction object of the repayBorrow
  *     or repayBorrowBehalf transaction.
  */
-export async function repayBorrow(asset: string, amount: any, borrower: string, platform: string, options: any = {}) {
+export async function repayBorrow(asset: string, amount: any, borrower: string, pool: string, options: any = {}) {
   await netId(this);
   const errorPrefix = 'Compound [repayBorrow] | ';
 
-  const address = _address[platform];  
-  const underlyings = _underlyings[platform];
-  const decimals = _decimals[platform];
-  const constants = _constants[platform];    
+  const address = _address[pool];  
+  const underlyings = _underlyings[pool];
+  const decimals = _decimals[pool];
+  const constants = _constants[pool];    
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];
