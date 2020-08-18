@@ -87,3 +87,18 @@ export async function exitMarket(market: string, pool: string = 'compound') {
 
   return eth.trx(comptrollerAddress, 'exitMarket', parameters, trxOptions);
 }
+
+export async function allMarkets(pool: string = 'compound') {
+  const address = _address[pool];
+  const comptrollerAddress = address[this._network.name].Comptroller;
+
+  
+  const method = 'allMarkets';
+  const options = {
+    _compoundProvider: this._provider,
+    abi: abi.Comptroller
+  };
+  const _allMarkets = await eth.read(comptrollerAddress, method, [], options);  
+  return _allMarkets;
+  
+}
