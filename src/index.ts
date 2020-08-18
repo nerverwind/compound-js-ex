@@ -19,7 +19,7 @@ ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
  * @returns {object} Returns an instance of Compound.js SDK.
  * 
  */
-const Compound = function(provider: any='mainnet', options: any={}, pool: string = 'compound') {
+const Compound = async function(provider: any='mainnet', options: any={}, pool: string = 'compound') {
   options.provider = provider || options.provider;
   provider = eth.createProvider(options);
 
@@ -34,10 +34,12 @@ const Compound = function(provider: any='mainnet', options: any={}, pool: string
 
   // Instance needs to know which network the provider connects to, so it can
   //     use the correct contract addresses.
-  instance._networkPromise = eth.getProviderNetwork(provider).then((network) => {
-    delete instance._networkPromise;
-    instance._network = network;
-  });
+  // instance._networkPromise = eth.getProviderNetwork(provider).then((network) => {
+  //   delete instance._networkPromise;
+  //   instance._network = network;
+  // });
+
+  instance._network = await eth.getProviderNetwork(provider);
 
   return instance;
 };
