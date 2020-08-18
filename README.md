@@ -1,3 +1,12 @@
+# 基于Compound-js封装
+
+支持多POOL配置
+
+```
+const instance = new Compound(window.ethereum, {}, 'pool');
+
+```
+
 # Compound.js [Alpha]
 
 A JavaScript SDK for Ethereum and the Compound Protocol. Wraps around [Ethers.js](https://github.com/ethers-io/ethers.js/). Works in the **web browser** and **Node.js**.
