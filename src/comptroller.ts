@@ -89,16 +89,17 @@ export async function exitMarket(market: string, pool: string = 'compound') {
 }
 
 export async function allMarkets(pool: string = 'compound') {
+  await netId(this);
   const address = _address[pool];
   const comptrollerAddress = address[this._network.name].Comptroller;
 
   
-  const method = 'allMarkets';
+  const method = 'getAllMarkets';
   const options = {
     _compoundProvider: this._provider,
     abi: abi.Comptroller
   };
   const _allMarkets = await eth.read(comptrollerAddress, method, [], options);  
   return _allMarkets;
-  
+
 }
