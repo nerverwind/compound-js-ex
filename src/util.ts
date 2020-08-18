@@ -1,4 +1,4 @@
-import { address as _address } from './constantsMultiPlatform';
+import { address as _address } from './constants';
 
 /**
  * Gets the contract address of the named contract. This method supports 
@@ -10,7 +10,7 @@ import { address as _address } from './constantsMultiPlatform';
  *
  * @returns {string} Returns the address of the contract.
  */
-export function getAddress(contract, network='mainnet', platform: string) {
-  const address = _address[platform];
+export function getAddress(contract, network='mainnet') {
+  const address = _address[this._pool];
   return address[network][contract];
 }

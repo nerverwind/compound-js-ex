@@ -3,8 +3,9 @@ import * as eth from './eth';
 import * as util from './util';
 import * as comptroller from './comptroller';
 import * as cToken from './cToken';
+import * as token from './token';
 import * as priceFeed from './priceFeed';
-import { constants as _constants, decimals as _decimals } from './constantsMultiPlatform';
+import { constants as _constants, decimals as _decimals } from './constants';
 
 // Turn off Ethers.js warnings
 ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
@@ -27,13 +28,15 @@ const Compound = function(provider: any='mainnet', options: any={}, pool: string
 
   const instance: any = {
     _provider: provider,
+    _pool: pool,
     ...comptroller,
     ...cToken,
     ...priceFeed,
+    ...token
   };
 
   // Instance needs to know which network the provider connects to, so it can
-  //     use the correct contract addresses.
+  // use the correct contract addresses.
   instance._networkPromise = eth.getProviderNetwork(provider).then((network) => {
     delete instance._networkPromise;
     instance._network = network;

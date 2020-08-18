@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import * as eth from './eth';
 import { netId } from './helpers';
-import { constants as _constants, address as _address, abi, cTokens as _cTokens } from './constantsMultiPlatform';
+import { constants as _constants, address as _address, abi, cTokens as _cTokens } from './constants';
 
 /**
  * Enters the user's address into Compound protocol markets.
@@ -12,7 +12,7 @@ import { constants as _constants, address as _address, abi, cTokens as _cTokens 
  * @returns {object} Returns an Ethers.js transaction object of the enterMarkets
  *     transaction.
  */
-export async function enterMarkets(markets: any = [], pool: string = 'compound') {
+export async function enterMarkets(markets: any = []) {
   await netId(this);
   const errorPrefix = 'Compound [enterMarkets] | ';
 
@@ -25,8 +25,8 @@ export async function enterMarkets(markets: any = [], pool: string = 'compound')
   }
 
   const addresses = [];
-  const cTokens = _cTokens[pool];
-  const address = _address[pool];
+  const cTokens = _cTokens[this._pool];
+  const address = _address[this._pool];
   for (let i = 0; i < markets.length; i++) {
     if (markets[i][0] !== 'c') {
       markets[i] = 'c' + markets[i];
@@ -57,7 +57,7 @@ export async function enterMarkets(markets: any = [], pool: string = 'compound')
  * @returns {object} Returns an Ethers.js transaction object of the exitMarket
  *     transaction.
  */
-export async function exitMarket(market: string, pool: string = 'compound') {
+export async function exitMarket(market: string) {
   await netId(this);
   const errorPrefix = 'Compound [exitMarkets] | ';
 
@@ -69,8 +69,8 @@ export async function exitMarket(market: string, pool: string = 'compound') {
     market = 'c' + market;
   }
 
-  const cTokens = _cTokens[pool];
-  const address = _address[pool];
+  const cTokens = _cTokens[this._pool];
+  const address = _address[this._pool];
 
   if (!cTokens.includes(market)) {
     throw Error(errorPrefix + 'Provided market `' + market + '` is not a recognized cToken.');
@@ -88,9 +88,9 @@ export async function exitMarket(market: string, pool: string = 'compound') {
   return eth.trx(comptrollerAddress, 'exitMarket', parameters, trxOptions);
 }
 
-export async function allMarkets(pool: string = 'compound') {
+export async function allMarkets() {
   await netId(this);
-  const address = _address[pool];
+  const address = _address[this._pool];
   const comptrollerAddress = address[this._network.name].Comptroller;
 
   

@@ -1,18 +1,18 @@
 import { ethers } from 'ethers';
 import * as eth from './eth';
 import { netId } from './helpers';
-import { constants as _constants, address as _address, abi, cTokens as _cTokens, underlyings as _underlyings, decimals as _decimals, opfAssets as _opfAssets } from './constantsMultiPlatform';
+import { constants as _constants, address as _address, abi, cTokens as _cTokens, underlyings as _underlyings, decimals as _decimals, opfAssets as _opfAssets } from './constants';
 
-function validateAsset(asset: string, argument: string, errorPrefix: string, pool: string) {
+function validateAsset(asset: string, argument: string, errorPrefix: string) {
   if (typeof asset !== 'string' || asset.length < 1) {
     throw Error(errorPrefix + 'Argument `' + argument + '` must be a non-empty string.');
   }
 
-  const address = _address[pool];  
-  const underlyings = _underlyings[pool];
-  const decimals = _decimals[pool];
-  const cTokens = _cTokens[pool];  
-  const opfAssets = _opfAssets[pool];
+  const address = _address[this._pool];  
+  const underlyings = _underlyings[this._pool];
+  const decimals = _decimals[this._pool];
+  const cTokens = _cTokens[this._pool];  
+  const opfAssets = _opfAssets[this._pool];
 
   const assetIsCToken = asset[0] === 'c';
 
@@ -67,10 +67,10 @@ async function cTokenExchangeRate(cTokenAddress, cTokenName, underlyingDecimals,
  * @returns {string} Returns a string of the numerical value of the asset.
  */
 
-export async function getPrice(asset: string, inAsset: string, pool: string) { //inAsset = constants.USDT;
+export async function getPrice(asset: string, inAsset: string) { //inAsset = constants.USDT;
   
-  const address = _address[pool];  
-  const constants = _constants[pool];
+  const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   inAsset = !inAsset ? constants.USDT : inAsset;
 

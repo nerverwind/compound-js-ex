@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import * as eth from './eth';
 import { netId } from './helpers';
-import { constants as _constants, address as _address, abi, decimals as _decimals, underlyings as _underlyings, cTokens as _cTokens } from './constantsMultiPlatform';
+import { constants as _constants, address as _address, abi, decimals as _decimals, underlyings as _underlyings, cTokens as _cTokens } from './constants';
 
 /**
  * Supplies the user's Ethereum asset to the Compound protocol.
@@ -17,14 +17,14 @@ import { constants as _constants, address as _address, abi, decimals as _decimal
  * @returns {object} Returns an Ethers.js transaction object of the supply
  *     transaction.
  */
-export async function supply(asset: string, amount: any, pool: string, options: any = {}) {
+export async function supply(asset: string, amount: any, options: any = {}) {
   await netId(this);
   const errorPrefix = 'Compound [supply] | ';
 
-  const address = _address[pool];  
-  const underlyings = _underlyings[pool];
-  const decimals = _decimals[pool];
-  const constants = _constants[pool];
+  const address = _address[this._pool];  
+  const underlyings = _underlyings[this._pool];
+  const decimals = _decimals[this._pool];
+  const constants = _constants[this._pool];
 
   console.log('address', address);
   console.log('underlyings', underlyings);
@@ -81,7 +81,7 @@ export async function supply(asset: string, amount: any, pool: string, options: 
  * @returns {object} Returns an Ethers.js transaction object of the redeem
  *     transaction.
  */
-export async function redeem(asset: string, amount: any, pool: string, options: any = {}) {
+export async function redeem(asset: string, amount: any, options: any = {}) {
   await netId(this);
   const errorPrefix = 'Compound [redeem] | ';
 
@@ -89,11 +89,11 @@ export async function redeem(asset: string, amount: any, pool: string, options: 
     throw Error(errorPrefix + 'Argument `asset` must be a non-empty string.');
   }
 
-  const address = _address[pool];  
-  const underlyings = _underlyings[pool];
-  const decimals = _decimals[pool];
-  const constants = _constants[pool];  
-  const cTokens = _cTokens[pool];
+  const address = _address[this._pool];  
+  const underlyings = _underlyings[this._pool];
+  const decimals = _decimals[this._pool];
+  const constants = _constants[this._pool];  
+  const cTokens = _cTokens[this._pool];
 
   const assetIsCToken = asset[0] === 'c';
 
@@ -149,14 +149,14 @@ export async function redeem(asset: string, amount: any, pool: string, options: 
  * @returns {object} Returns an Ethers.js transaction object of the borrow
  *     transaction.
  */
-export async function borrow(asset: string, amount: any, pool: string, options: any = {}) {
+export async function borrow(asset: string, amount: any, options: any = {}) {
   await netId(this);
   const errorPrefix = 'Compound [borrow] | ';
 
-  const address = _address[pool];  
-  const underlyings = _underlyings[pool];
-  const decimals = _decimals[pool];
-  const constants = _constants[pool];    
+  const address = _address[this._pool];  
+  const underlyings = _underlyings[this._pool];
+  const decimals = _decimals[this._pool];
+  const constants = _constants[this._pool];    
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];
@@ -206,14 +206,14 @@ export async function borrow(asset: string, amount: any, pool: string, options: 
  * @returns {object} Returns an Ethers.js transaction object of the repayBorrow
  *     or repayBorrowBehalf transaction.
  */
-export async function repayBorrow(asset: string, amount: any, borrower: string, pool: string, options: any = {}) {
+export async function repayBorrow(asset: string, amount: any, borrower: string, options: any = {}) {
   await netId(this);
   const errorPrefix = 'Compound [repayBorrow] | ';
 
-  const address = _address[pool];  
-  const underlyings = _underlyings[pool];
-  const decimals = _decimals[pool];
-  const constants = _constants[pool];    
+  const address = _address[this._pool];  
+  const underlyings = _underlyings[this._pool];
+  const decimals = _decimals[this._pool];
+  const constants = _constants[this._pool];    
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];
