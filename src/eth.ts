@@ -232,6 +232,8 @@ export function createProvider(options: CallOptions = {}) : any {
   // Create an ethers provider, web3's can sign
   if (isADefaultProvider) {
     provider = ethers.getDefaultProvider(provider);
+  } else if (typeof provider === 'object') {
+    provider = new ethers.providers.Web3Provider(provider)
   } else {
     provider = new ethers.providers.JsonRpcProvider(provider);
   }
