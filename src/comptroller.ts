@@ -88,6 +88,40 @@ export async function exitMarket(market: string) {
   return eth.trx(comptrollerAddress, 'exitMarket', parameters, trxOptions);
 }
 
+export async function getAssetsIn(account: string) {
+  await netId(this);
+  const address = _address[this._pool];
+  const comptrollerAddress = address[this._network.name].Comptroller;
+
+  
+  const method = 'getAssetsIn';
+  const options = {
+    _compoundProvider: this._provider,
+    abi: abi.Comptroller
+  };
+  const markets = await eth.read(comptrollerAddress, method, [account], options);  
+  return markets;  
+}
+
+export async function collateralFactor(asset: string) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const comptrollerAddress = address[this._network.name].Comptroller;
+
+  const method = 'getAssetsIn';
+  const options = {
+    _compoundProvider: this._provider,
+    abi: abi.Comptroller
+  };
+  const cf = await eth.read(comptrollerAddress, method, [cTokenAddress], options);  
+  return cf;    
+
+}
+
 export async function allMarkets() {
   await netId(this);
   const address = _address[this._pool];
