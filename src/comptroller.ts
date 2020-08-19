@@ -112,7 +112,7 @@ export async function collateralFactor(asset: string) {
 
   const comptrollerAddress = address[this._network.name].Comptroller;
 
-  const method = 'getAssetsIn';
+  const method = 'markets';
   const options = {
     _compoundProvider: this._provider,
     abi: abi.Comptroller
