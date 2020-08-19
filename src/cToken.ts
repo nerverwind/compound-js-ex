@@ -392,11 +392,12 @@ export async function getCash(asset: string, options: any = {}) {
 }
 
 export async function exchangeRate(asset: string, options: any = {}) {
+  let _this = this;
   // exchangeRate = (getCash() + totalBorrows() - totalReserves()) / totalSupply()
-  let cash = await getCash(asset, options);
-  let _totalBorrows = await totalBorrows(asset, options);
-  let _totalReserves = await totalReserves(asset, options);
-  let _totalSupply = await totalSupply(asset, options);
+  let cash = await getCash.apply(_this, [asset, options]);
+  let _totalBorrows = await totalBorrows.apply(_this, [asset, options]);
+  let _totalReserves = await totalReserves.apply( _this, [asset, options]);
+  let _totalSupply = await totalSupply(_this, [asset, options]);
 
   let _exchangeRate = cash.add(_totalBorrows).sub(_totalReserves).div(_totalSupply);
   return _exchangeRate;
