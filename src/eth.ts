@@ -204,14 +204,11 @@ export async function getBalance(address: string, provider: any) {
   if (typeof provider === 'object' && provider._isSigner) {
     provider = provider.provider;
   }
-
-  let providerInstance = createProvider({ provider });
-  if (!providerInstance.send) {
-    const url = providerInstance.providerConfigs[0].provider.connection.url;
-    providerInstance = new ethers.providers.JsonRpcProvider(url);
+  else {
+    provider = new ethers.providers.JsonRpcProvider(provider);
   }
 
-  const balance = await providerInstance.send(
+  const balance = await provider.send(
     'eth_getBalance', [ address, 'latest' ]
   );
   return balance;

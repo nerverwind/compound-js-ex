@@ -5,14 +5,9 @@ import { address as _address, abi, } from './constants';
 
 export async function getTokenBalance(address: string, asset: string) {
     if('ETH' == asset) {
-        let provider: any = this._provider;
-        if (provider._isSigner) {
-            provider = provider.provider;
-        }
-
-        return await provider.send('eth_getBalance', [address, 'latest']);
-
-
+        let balance = await eth.getBalance(address, this._provider);
+        balance = ethers.BigNumber.from(balance);
+        return balance.toString(10);
     }
     else {
         await netId(this);
