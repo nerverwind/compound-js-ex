@@ -300,7 +300,7 @@ export async function supplyRate(asset: string, options: any = {}) {
   return res / 1e18;  
 } 
 
-export async function totalBorrow(asset: string, options: any = {}) {
+export async function totalBorrows(asset: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
 
@@ -318,7 +318,7 @@ export async function totalBorrow(asset: string, options: any = {}) {
   return res;  
 }
 
-export async function borrwoRate(asset: string, options: any = {}) {
+export async function borrowRate(asset: string, options: any = {}) {
   
   await netId(this);
   const address = _address[this._pool];  
@@ -334,7 +334,7 @@ export async function borrwoRate(asset: string, options: any = {}) {
   };
 
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
-  return res / 1e18;    
+  return res ;    
 }
 
 export async function reserveFactor(asset: string, options: any = {}) {
@@ -352,5 +352,53 @@ export async function reserveFactor(asset: string, options: any = {}) {
   };
 
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
-  return res / 1e18;   
+  return res;   
+}
+
+export async function totalReserves(asset: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'totalReserves';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res;   
+}
+
+export async function getCash(asset: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'getCash';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res; 
+}
+
+export async function exchangeRate(asset: string, options: any = {}) {
+  // exchangeRate = (getCash() + totalBorrows() - totalReserves()) / totalSupply()
+  let cash = await getCash(asset, options);
+  let _totalBorrows = await totalBorrows(asset, options);
+  let _totalReserves = await totalReserves(asset, options);
+  let _totalSupply = await totalSupply(asset, options);
+
+  let _exchangeRate = cash.add(_totalBorrows).sub(_totalReserves).div(_totalSupply);
+  return _exchangeRate;
+
 }
