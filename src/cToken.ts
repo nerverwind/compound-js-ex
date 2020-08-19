@@ -279,7 +279,7 @@ export async function totalSupply(asset: string, options: any = {})  {
   };
 
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
-  return res;
+  return res.toString();
 }
 
 export async function supplyRate(asset: string, options: any = {}) {
@@ -297,7 +297,7 @@ export async function supplyRate(asset: string, options: any = {}) {
   };
 
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
-  return res;  
+  return res.toString();  
 } 
 
 export async function totalBorrows(asset: string, options: any = {}) {
@@ -315,7 +315,7 @@ export async function totalBorrows(asset: string, options: any = {}) {
   };
 
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
-  return res;  
+  return res.toString();  
 }
 
 export async function borrowRate(asset: string, options: any = {}) {
@@ -334,7 +334,7 @@ export async function borrowRate(asset: string, options: any = {}) {
   };
 
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
-  return res ;    
+  return res.toString();    
 }
 
 export async function reserveFactor(asset: string, options: any = {}) {
@@ -352,7 +352,7 @@ export async function reserveFactor(asset: string, options: any = {}) {
   };
 
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
-  return res;   
+  return res.toString();   
 }
 
 export async function totalReserves(asset: string, options: any = {}) {
@@ -370,7 +370,7 @@ export async function totalReserves(asset: string, options: any = {}) {
   };
 
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
-  return res;   
+  return res.toString();   
 }
 
 export async function getCash(asset: string, options: any = {}) {
@@ -388,5 +388,5 @@ export async function getCash(asset: string, options: any = {}) {
   };
 
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
-  return res; 
+  return res.toString(); 
 }
