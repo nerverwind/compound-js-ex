@@ -22,12 +22,22 @@ ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
  */
 const Compound = function(provider: any='mainnet', options: any={}, pool: string = 'compound') {
   options.provider = provider || options.provider;
+  let rawProvider : any ;
+  if('object' == typeof provider) {
+    rawProvider = {};
+    Object.assign(rawProvider, provider);
+  }
+  else {
+    rawProvider = provider;
+  }
+  
   provider = eth.createProvider(options);
 
   Compound.setPool(pool);
 
   const instance: any = {
     _provider: provider,
+    _rawProvider: rawProvider,
     _pool: pool,
     ...comptroller,
     ...cToken,
