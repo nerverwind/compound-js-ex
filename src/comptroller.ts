@@ -103,3 +103,37 @@ export async function allMarkets() {
   return _allMarkets;
 
 }
+
+export async function getPoolAssets(cTokens: Array<any>) {
+  await netId(this);
+  const address : Array<any> = _address[this._pool][this._network.name];
+  let _cTokens = [];
+  let _underlyings = [];
+  for( let key in address) {
+    if(address.hasOwnProperty(key)) {
+      let _temp = cTokens.filter(token => {
+        return token == address[key];
+      });
+      if(_temp.length > 0) {
+        let cToken = {
+          symbol: key,
+          address: _temp[0]
+        }
+
+        _cTokens.push(cToken);
+        let underlyingSymbol = cToken.symbol.substr(1);
+        let underlying = {
+          symbol: underlyingSymbol,
+          address: address[underlyingSymbol]
+        }
+        _underlyings.push(underlying);
+      }
+    }
+  }
+
+  return {
+    cTokens: _cTokens,
+    underlyings: _underlyings
+  }
+
+}
