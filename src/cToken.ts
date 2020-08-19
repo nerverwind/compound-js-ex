@@ -263,3 +263,94 @@ export async function repayBorrow(asset: string, amount: any, borrower: string, 
 
   return eth.trx(cTokenAddress, method, parameters, trxOptions);
 }
+
+export async function totalSupply(asset: string, options: any = {})  {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'totalSupply';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res;
+}
+
+export async function supplyRate(asset: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'supplyRatePerBlock';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res / 1e18;  
+} 
+
+export async function totalBorrow(asset: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'totalBorrowsCurrent';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res;  
+}
+
+export async function borrwoRate(asset: string, options: any = {}) {
+  
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'borrowRatePerBlock';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res / 1e18;    
+}
+
+export async function reserveFactor(asset: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'reserveFactorMantissa';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res / 1e18;   
+}

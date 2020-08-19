@@ -116,14 +116,14 @@ export async function getPoolAssets(cTokens: Array<any>) {
       });
       if(_temp.length > 0) {
         let cToken = {
-          symbol: key,
+          name: key,
           address: _temp[0]
         }
 
         _cTokens.push(cToken);
-        let underlyingSymbol = cToken.symbol.substr(1);
+        let underlyingSymbol = cToken.name.substr(1);
         let underlying = {
-          symbol: underlyingSymbol,
+          name: underlyingSymbol,
           address: address[underlyingSymbol]
         }
         _underlyings.push(underlying);
