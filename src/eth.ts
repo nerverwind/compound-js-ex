@@ -233,7 +233,7 @@ export function createProvider(options: CallOptions = {}) : any {
   if (isADefaultProvider) {
     provider = ethers.getDefaultProvider(provider);
   } else if (typeof provider === 'object') {
-    provider = new ethers.providers.Web3Provider(provider)
+    provider = new ethers.providers.Web3Provider(provider).getSigner();
   } else {
     provider = new ethers.providers.JsonRpcProvider(provider);
   }
