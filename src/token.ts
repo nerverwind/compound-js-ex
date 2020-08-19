@@ -14,6 +14,6 @@ export async function getTokenBalance(address: string, asset: string) {
         return await eth.read(contractAddress, 'balanceOf', [address], {
             _compoundProvider: this._provider,
             abi: abi.Erc20
-        })
+        }); 
     }
 }
