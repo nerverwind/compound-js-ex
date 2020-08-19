@@ -390,3 +390,21 @@ export async function getCash(asset: string, options: any = {}) {
   const res = await eth.read(cTokenAddress, method, [], trxOptions);  
   return res.toString(); 
 }
+
+export async function exchangeRate(asset: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'exchangeRateCurrent';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res.toString();   
+}
