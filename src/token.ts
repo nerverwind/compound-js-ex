@@ -7,7 +7,7 @@ export async function getTokenBalance(address: string, asset: string) {
     if('ETH' == asset) {
         let balance = await eth.getBalance(address, this._provider);
         balance = ethers.BigNumber.from(balance);
-        return balance.toString(10);
+        return balance.toString();
     }
     else {
         await netId(this);
