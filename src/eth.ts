@@ -207,7 +207,7 @@ export async function getBalance(address: string, provider: any) {
 
   let providerInstance = createProvider({ provider });
   if (!providerInstance.send) {
-    const url = providerInstance.provider.connection.url;
+    const url = providerInstance.providerConfigs[0].provider.connection.url;
     providerInstance = new ethers.providers.JsonRpcProvider(url);
   }
 

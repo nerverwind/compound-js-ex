@@ -5,7 +5,9 @@ import { address as _address, abi, } from './constants';
 
 export async function getTokenBalance(address: string, asset: string) {
     if('ETH' == asset) {
-        return await eth.getBalance(address, this._provider);
+        return await this._provider.send(
+            'eth_getBalance', [ address, 'latest' ]
+        );
     }
     else {
         await netId(this);
