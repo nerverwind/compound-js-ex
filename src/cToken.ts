@@ -267,6 +267,7 @@ export async function repayBorrow(asset: string, amount: any, borrower: string, 
 export async function totalSupply(asset: string, options: any = {})  {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];    
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -274,7 +275,7 @@ export async function totalSupply(asset: string, options: any = {})  {
   const method = 'totalSupply';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -285,6 +286,7 @@ export async function totalSupply(asset: string, options: any = {})  {
 export async function supplyRate(asset: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];    
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -292,7 +294,7 @@ export async function supplyRate(asset: string, options: any = {}) {
   const method = 'supplyRatePerBlock';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -303,6 +305,7 @@ export async function supplyRate(asset: string, options: any = {}) {
 export async function totalBorrows(asset: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -310,7 +313,7 @@ export async function totalBorrows(asset: string, options: any = {}) {
   const method = 'totalBorrowsCurrent';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -322,6 +325,7 @@ export async function borrowRate(asset: string, options: any = {}) {
   
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -329,7 +333,7 @@ export async function borrowRate(asset: string, options: any = {}) {
   const method = 'borrowRatePerBlock';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -339,7 +343,8 @@ export async function borrowRate(asset: string, options: any = {}) {
 
 export async function reserveFactor(asset: string, options: any = {}) {
   await netId(this);
-  const address = _address[this._pool];  
+  const address = _address[this._pool]; 
+  const constants = _constants[this._pool]; 
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -347,7 +352,7 @@ export async function reserveFactor(asset: string, options: any = {}) {
   const method = 'reserveFactorMantissa';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -358,6 +363,7 @@ export async function reserveFactor(asset: string, options: any = {}) {
 export async function totalReserves(asset: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -365,7 +371,7 @@ export async function totalReserves(asset: string, options: any = {}) {
   const method = 'totalReserves';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -376,6 +382,7 @@ export async function totalReserves(asset: string, options: any = {}) {
 export async function getCash(asset: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -383,7 +390,7 @@ export async function getCash(asset: string, options: any = {}) {
   const method = 'getCash';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -394,6 +401,7 @@ export async function getCash(asset: string, options: any = {}) {
 export async function exchangeRate(asset: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -401,7 +409,7 @@ export async function exchangeRate(asset: string, options: any = {}) {
   const method = 'exchangeRateCurrent';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -412,6 +420,7 @@ export async function exchangeRate(asset: string, options: any = {}) {
 export async function exchangeRateStored(asset: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -419,7 +428,7 @@ export async function exchangeRateStored(asset: string, options: any = {}) {
   const method = 'exchangeRateStored';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -430,6 +439,7 @@ export async function exchangeRateStored(asset: string, options: any = {}) {
 export async function borrowBalance(asset: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -437,7 +447,7 @@ export async function borrowBalance(asset: string, options: any = {}) {
   const method = 'borrowBalanceCurrent';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -448,6 +458,7 @@ export async function borrowBalance(asset: string, options: any = {}) {
 export async function getAccountSnapshot(asset: string, account: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -455,7 +466,7 @@ export async function getAccountSnapshot(asset: string, account: string, options
   const method = 'getAccountSnapshot';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
@@ -480,6 +491,7 @@ export async function getContractAddress(asset: string) {
 export async function balanceOfUnderlying(asset: string, account: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
+  const constants = _constants[this._pool];
 
   const cTokenName = 'c' + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
@@ -487,7 +499,7 @@ export async function balanceOfUnderlying(asset: string, account: string, option
   const method = 'balanceOfUnderlying';
   const trxOptions: any = { 
     _compoundProvider: this._provider, 
-    abi: abi.cErc20,
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
     ...options 
   };
 
