@@ -423,4 +423,22 @@ export async function getContractAddress(asset: string) {
   }
 }
 
+export async function balanceOfUnderlying(asset: string, account: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'balanceOfUnderlying';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [account], trxOptions);  
+  return res.toString();     
+}
+
 
