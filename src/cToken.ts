@@ -436,7 +436,7 @@ export async function exchangeRateStored(asset: string, options: any = {}) {
   return res.toString();     
 }
 
-export async function borrowBalance(asset: string, options: any = {}) {
+export async function borrowBalance(asset: string, account: string, options: any = {}) {
   await netId(this);
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
@@ -451,7 +451,7 @@ export async function borrowBalance(asset: string, options: any = {}) {
     ...options 
   };
 
-  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  const res = await eth.read(cTokenAddress, method, [account], trxOptions);  
   return res.toString();   
 }
 
