@@ -223,7 +223,7 @@ export async function _getBlockNumber(provider: any) {
   }
 
   const blockNumber = await provider.send(
-    'eth_getBlockByNumber', []
+    'eth_getBlockByNumber', ['latest']
   );
   return blockNumber;  
 }
