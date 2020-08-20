@@ -19,3 +19,7 @@ export async function getTokenBalance(address: string, asset: string) {
         }); 
     }
 }
+
+export async function getBlockNumber() {
+    return await eth._getBlockNumber(this._provider);
+}

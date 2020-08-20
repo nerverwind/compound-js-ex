@@ -214,7 +214,7 @@ export async function getBalance(address: string, provider: any) {
   return balance;
 }
 
-export async function getBlockNumber(provider: any) {
+export async function _getBlockNumber(provider: any) {
   if (typeof provider === 'object' && provider._isSigner) {
     provider = provider.provider;
   }
@@ -223,7 +223,7 @@ export async function getBlockNumber(provider: any) {
   }
 
   const blockNumber = await provider.send(
-    'eth_getBlockByNumber', [ ]
+    'eth_getBlockByNumber', []
   );
   return blockNumber;  
 }
