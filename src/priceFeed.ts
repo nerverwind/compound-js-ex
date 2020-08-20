@@ -37,9 +37,9 @@ function validateAsset(asset: string, argument: string, errorPrefix: string) {
   return [assetIsCToken, cTokenName, cTokenAddress, underlyingName, underlyingAddress, underlyingDecimals];
 }
 
-async function cTokenExchangeRate(cTokenAddress, cTokenName, underlyingDecimals, pool) {
+async function cTokenExchangeRate(cTokenAddress, cTokenName, underlyingDecimals) {
 
-  const constants = _constants[pool];
+  const constants = _constants[this._pool];
 
   const address = cTokenAddress;
   const method = 'exchangeRateCurrent';
