@@ -409,6 +409,60 @@ export async function exchangeRate(asset: string, options: any = {}) {
   return res.toString();   
 }
 
+export async function exchangeRateStored(asset: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'exchangeRateStored';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res.toString();     
+}
+
+export async function borrowBalance(asset: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'borrowBalanceCurrent';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res.toString();   
+}
+
+export async function getAccountSnapshot(asset: string, account: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const method = 'getAccountSnapshot';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [account], trxOptions);  
+  return res.toString();     
+}
+
 export async function getContractAddress(asset: string) {
   await netId(this);
   const address = _address[this._pool];  
