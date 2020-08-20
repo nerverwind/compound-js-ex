@@ -214,6 +214,20 @@ export async function getBalance(address: string, provider: any) {
   return balance;
 }
 
+export async function getBlockNumber(provider: any) {
+  if (typeof provider === 'object' && provider._isSigner) {
+    provider = provider.provider;
+  }
+  else {
+    provider = new ethers.providers.JsonRpcProvider(provider);
+  }
+
+  const blockNumber = await provider.send(
+    'eth_getBlockByNumber', [ ]
+  );
+  return blockNumber;  
+}
+
 /**
  * Creates an Ethereum network provider object.
  *
