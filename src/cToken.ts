@@ -527,4 +527,22 @@ export async function accrualBlockNumber(asset: string, options: any = {}) {
   return res.toString();       
 }
 
+export async function callReadFunc(method: string, asset: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+  const constants = _constants[this._pool];
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
+    ...options 
+  };
+
+  const res = await eth.read(cTokenAddress, method, [], trxOptions);  
+  return res.toString();    
+}
+
 
