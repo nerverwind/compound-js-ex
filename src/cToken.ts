@@ -545,4 +545,46 @@ export async function callReadFunc(method: string, params: Array<any>, asset: st
   return res.toString();    
 }
 
+export async function allowance(asset: string, owner: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];  
+  const constants = _constants[this._pool];
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+  const underlyingAddress = address[this._network.name][asset];
+
+  const method = 'allowance';
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: cTokenName == constants.cETH ? abi.cEther : abi.cErc20,
+    ...options 
+  };  
+
+  const res = await eth.read(underlyingAddress, method, [owner, cTokenAddress], trxOptions);  
+  return res.toString();
+}
+
+export async function approve(asset: string, amount: string, options: any = {}) {
+  await netId(this);
+  const address = _address[this._pool];
+
+  const cTokenName = 'c' + asset;
+  const cTokenAddress = address[this._network.name][cTokenName];  
+  const underlyingAddress = address[this._network.name][asset];
+
+  const trxOptions: any = { 
+    _compoundProvider: this._provider, 
+    abi: abi.cErc20,
+    ...options 
+  };    
+
+  return await eth.trx(
+    underlyingAddress,
+    'approve',
+    [ cTokenAddress, amount ],
+    trxOptions
+  ); 
+}
+
 
