@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import * as eth from './eth';
 import { netId } from './helpers';
-import { constants as _constants, address as _address, abi, decimals as _decimals, underlyings as _underlyings, cTokens as _cTokens } from './constants';
+import { constants as _constants, address as _address, abi, decimals as _decimals, underlyings as _underlyings, cTokens as _cTokens, POOL_TOKEN_PREFIX } from './constants';
 
 /**
  * Supplies the user's Ethereum asset to the Compound protocol.
@@ -19,7 +19,7 @@ import { constants as _constants, address as _address, abi, decimals as _decimal
  */
 export async function supply(asset: string, amount: any, options: any = {}) {
   await netId(this);
-  const errorPrefix = 'Compound [supply] | ';
+  const errorPrefix = 'Gama [supply] | ';
 
   const address = _address[this._pool];  
   const underlyings = _underlyings[this._pool];
@@ -31,7 +31,7 @@ export async function supply(asset: string, amount: any, options: any = {}) {
   console.log('decimals', decimals);
   console.log('constants', constants);
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = `${POOL_TOKEN_PREFIX}asset`;
   const cTokenAddress = address[this._network.name][cTokenName];
 
   if (!cTokenAddress || !underlyings.includes(asset)) {
@@ -95,9 +95,9 @@ export async function redeem(asset: string, amount: any, options: any = {}) {
   const constants = _constants[this._pool];  
   const cTokens = _cTokens[this._pool];
 
-  const assetIsCToken = asset[0] === 'c';
+  const assetIsCToken = asset[0] === POOL_TOKEN_PREFIX;
 
-  const cTokenName = assetIsCToken ? asset : 'c' + asset;
+  const cTokenName = assetIsCToken ? asset : POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];
 
   const underlyingName = assetIsCToken ? asset.slice(1, asset.length) : asset;
@@ -158,7 +158,7 @@ export async function borrow(asset: string, amount: any, options: any = {}) {
   const decimals = _decimals[this._pool];
   const constants = _constants[this._pool];    
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];
 
   if (!cTokenAddress || !underlyings.includes(asset)) {
@@ -215,7 +215,7 @@ export async function repayBorrow(asset: string, amount: any, borrower: string, 
   const decimals = _decimals[this._pool];
   const constants = _constants[this._pool];    
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];
 
   if (!cTokenAddress || !underlyings.includes(asset)) {
@@ -269,7 +269,7 @@ export async function totalSupply(asset: string, options: any = {})  {
   const address = _address[this._pool];  
   const constants = _constants[this._pool];    
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'totalSupply';
@@ -288,7 +288,7 @@ export async function supplyRate(asset: string, options: any = {}) {
   const address = _address[this._pool];  
   const constants = _constants[this._pool];    
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'supplyRatePerBlock';
@@ -307,7 +307,7 @@ export async function totalBorrows(asset: string, options: any = {}) {
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'totalBorrowsCurrent';
@@ -327,7 +327,7 @@ export async function borrowRate(asset: string, options: any = {}) {
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'borrowRatePerBlock';
@@ -346,7 +346,7 @@ export async function reserveFactor(asset: string, options: any = {}) {
   const address = _address[this._pool]; 
   const constants = _constants[this._pool]; 
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'reserveFactorMantissa';
@@ -365,7 +365,7 @@ export async function totalReserves(asset: string, options: any = {}) {
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'totalReserves';
@@ -384,7 +384,7 @@ export async function getCash(asset: string, options: any = {}) {
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'getCash';
@@ -403,7 +403,7 @@ export async function exchangeRate(asset: string, options: any = {}) {
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'exchangeRateCurrent';
@@ -422,7 +422,7 @@ export async function exchangeRateStored(asset: string, options: any = {}) {
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'exchangeRateStored';
@@ -441,7 +441,7 @@ export async function borrowBalance(asset: string, account: string, options: any
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'borrowBalanceCurrent';
@@ -460,7 +460,7 @@ export async function getAccountSnapshot(asset: string, account: string, options
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'getAccountSnapshot';
@@ -478,7 +478,7 @@ export async function getContractAddress(asset: string) {
   await netId(this);
   const address = _address[this._pool];  
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
   const underlyingAddress =   address[this._network.name][asset];  
 
@@ -493,7 +493,7 @@ export async function balanceOfUnderlying(asset: string, account: string, option
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'balanceOfUnderlying';
@@ -513,7 +513,7 @@ export async function accrualBlockNumber(asset: string, options: any = {}) {
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const method = 'accrualBlockNumber';
@@ -532,7 +532,7 @@ export async function callReadFunc(method: string, params: Array<any>, asset: st
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const trxOptions: any = { 
@@ -550,7 +550,7 @@ export async function allowance(asset: string, owner: string, options: any = {})
   const address = _address[this._pool];  
   const constants = _constants[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
   const underlyingAddress = address[this._network.name][asset];
 
@@ -569,7 +569,7 @@ export async function approve(asset: string, amount: string, options: any = {}) 
   await netId(this);
   const address = _address[this._pool];
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
   const underlyingAddress = address[this._network.name][asset];
 

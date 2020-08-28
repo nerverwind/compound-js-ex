@@ -1,4 +1,6 @@
 // Publicly revealed on the parent class
+export const POOL_TOKEN_PREFIX = 'c';
+
 export const constants = {
     'eatMain': {
         'PriceFeed': 'PriceFeed',
@@ -30,7 +32,7 @@ export const constants = {
         'WBTC': 'WBTC',
         'ZRX': 'ZRX'
     },
-    'compound': {
+    'gama': {
         'PriceFeed': 'PriceFeed',
         'Maximillion': 'Maximillion',
         'CompoundLens': 'CompoundLens',
@@ -63,7 +65,7 @@ export const constants = {
   };
   
   export const address = {
-    'compound': {
+    'gama': {
         "mainnet": {
             "PriceFeed": "0x9b8eb8b3d6e2e0db36f41455185fef7049a35cae",
             "Maximillion": "0xf859A1AD94BcF445A406B892eF0d3082f4174088",
@@ -338,22 +340,22 @@ export const constants = {
   };
   
   export const cTokens = {
-      'compound': ['cBAT', 'cDAI', 'cETH', 'cREP', 'cSAI', 'cUSDC', 'cUSDT', 'cWBTC', 'cZRX'],
+      'gama': ['cBAT', 'cDAI', 'cETH', 'cREP', 'cSAI', 'cUSDC', 'cUSDT', 'cWBTC', 'cZRX'],
       'eatMain': ['cBAT', 'cDAI', 'cETH', 'cREP', 'cSAI', 'cUSDC', 'cUSDT', 'cWBTC', 'cZRX']
   }
   export const underlyings = {
-      'compound': ['BAT', 'DAI', 'ETH', 'REP', 'SAI', 'USDC', 'USDT', 'WBTC', 'ZRX'],
+      'gama': ['BAT', 'DAI', 'ETH', 'REP', 'SAI', 'USDC', 'USDT', 'WBTC', 'ZRX'],
       'eatMain': ['BAT', 'DAI', 'ETH', 'REP', 'SAI', 'USDC', 'USDT', 'WBTC', 'ZRX']
   }
   
   // additional assets supported by the open price feed
   export const opfAssets = {
-      'compound': ['COMP', 'KNC', 'LINK', 'BTC'],
+      'gama': ['COMP', 'KNC', 'LINK', 'BTC'],
       'eatMain': ['COMP', 'KNC', 'LINK', 'BTC']
   }
   
   export const decimals = {
-    'compound': {
+    'gama': {
         'COMP': 18,
         'cBAT': 8,
         'cDAI': 8,

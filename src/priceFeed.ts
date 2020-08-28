@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import * as eth from './eth';
 import { netId } from './helpers';
-import { constants as _constants, address as _address, abi, cTokens as _cTokens, underlyings as _underlyings, decimals as _decimals, opfAssets as _opfAssets } from './constants';
+import { constants as _constants, address as _address, abi, cTokens as _cTokens, underlyings as _underlyings, decimals as _decimals, opfAssets as _opfAssets, POOL_TOKEN_PREFIX } from './constants';
 
 function validateAsset(asset: string, argument: string, errorPrefix: string) {
   if (typeof asset !== 'string' || asset.length < 1) {
@@ -14,9 +14,9 @@ function validateAsset(asset: string, argument: string, errorPrefix: string) {
   const cTokens = _cTokens[this._pool];  
   const opfAssets = _opfAssets[this._pool];
 
-  const assetIsCToken = asset[0] === 'c';
+  const assetIsCToken = asset[0] === POOL_TOKEN_PREFIX;
 
-  const cTokenName = assetIsCToken ? asset : 'c' + asset;
+  const cTokenName = assetIsCToken ? asset : POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];
 
   let underlyingName = assetIsCToken ? asset.slice(1, asset.length) : asset;

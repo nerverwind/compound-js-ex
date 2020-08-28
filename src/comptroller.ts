@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import * as eth from './eth';
 import { netId } from './helpers';
-import { constants as _constants, address as _address, abi, cTokens as _cTokens } from './constants';
+import { constants as _constants, address as _address, abi, cTokens as _cTokens, POOL_TOKEN_PREFIX } from './constants';
 
 /**
  * Enters the user's address into Compound protocol markets.
@@ -14,7 +14,7 @@ import { constants as _constants, address as _address, abi, cTokens as _cTokens 
  */
 export async function enterMarkets(markets: any = []) {
   await netId(this);
-  const errorPrefix = 'Compound [enterMarkets] | ';
+  const errorPrefix = 'Gama [enterMarkets] | ';
 
   if (typeof markets === 'string') {
     markets = [ markets ];
@@ -28,8 +28,8 @@ export async function enterMarkets(markets: any = []) {
   const cTokens = _cTokens[this._pool];
   const address = _address[this._pool];
   for (let i = 0; i < markets.length; i++) {
-    if (markets[i][0] !== 'c') {
-      markets[i] = 'c' + markets[i];
+    if (markets[i][0] !== POOL_TOKEN_PREFIX) {
+      markets[i] = POOL_TOKEN_PREFIX + markets[i];
     }
 
     if (!cTokens.includes(markets[i])) {
@@ -59,14 +59,14 @@ export async function enterMarkets(markets: any = []) {
  */
 export async function exitMarket(market: string) {
   await netId(this);
-  const errorPrefix = 'Compound [exitMarkets] | ';
+  const errorPrefix = 'Gama [exitMarkets] | ';
 
   if (typeof market !== 'string' || market === '') {
     throw Error(errorPrefix + 'Argument `market` must be a string of a cToken market name.');
   }
 
-  if (market[0] !== 'c') {
-    market = 'c' + market;
+  if (market[0] !== POOL_TOKEN_PREFIX) {
+    market = POOL_TOKEN_PREFIX + market;
   }
 
   const cTokens = _cTokens[this._pool];
@@ -107,7 +107,7 @@ export async function collateralFactor(asset: string) {
   await netId(this);
   const address = _address[this._pool];  
 
-  const cTokenName = 'c' + asset;
+  const cTokenName = POOL_TOKEN_PREFIX + asset;
   const cTokenAddress = address[this._network.name][cTokenName];  
 
   const comptrollerAddress = address[this._network.name].Comptroller;
